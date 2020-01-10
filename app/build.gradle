@@ -25,11 +25,38 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
+
+    //okhttp
+    implementation("com.squareup.okhttp3:okhttp:4.3.1")
+    //moshi
+    implementation("com.squareup.moshi:moshi-kotlin:1.9.2")
+
+    //Jetpack
+    def lifecycle_version = '2.1.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    //RecyclerView
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    //AndroidViewAnimations
+    implementation 'androidx.core:core:1.0.0'
+    implementation 'com.daimajia.easing:library:2.1@aar'
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
+
+    //sensey
+    implementation 'com.github.nisrulz:sensey:1.8.0'
+
+    //okhttp test
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.3.1")
+
+    testImplementation 'junit:junit:4.13'
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
