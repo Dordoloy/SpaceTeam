@@ -7,6 +7,9 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
+    dataBinding{
+        enabled=true
+    }
     defaultConfig {
         applicationId "com.example.spaceteam"
         minSdkVersion 21
@@ -51,6 +54,10 @@ dependencies {
 
     //sensey
     implementation 'com.github.nisrulz:sensey:1.8.0'
+
+    //navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:2.1.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.1.0"
 
     //okhttp test
     testImplementation("com.squareup.okhttp3:mockwebserver:4.3.1")

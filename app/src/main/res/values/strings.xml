@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SpaceTeam</string>
+    <string name="team_score">Your team score</string>
+    <string name="play_again">Play Again</string>
+    <string name="quit">Quit</string>
+    <string name="play">Play</string>
+    <string name="finish">Finish</string>
 </resources>
