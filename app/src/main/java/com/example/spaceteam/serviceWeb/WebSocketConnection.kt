@@ -20,7 +20,6 @@ class WebSocketConnection {
     /**
      * Function that test the connection to the server
      *
-     *
      */
     fun testConnection() {
 
