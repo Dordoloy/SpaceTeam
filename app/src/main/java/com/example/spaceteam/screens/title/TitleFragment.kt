@@ -21,7 +21,7 @@ class TitleFragment: Fragment() {
         val binding = DataBindingUtil.inflate<TitleFragmentBinding>(inflater,
             R.layout.title_fragment,container,false)
 
-        binding.playButton.setOnClickListener { view : View ->
+        binding.goButton.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_titleFragment_to_roomFragment)
         }
         return binding.root
