@@ -8,4 +8,5 @@
     <string name="quit">Quit</string>
     <string name="play">Play</string>
     <string name="finish">Finish</string>
+    <string name="enter_pseudo_label">Enter pseudo</string>
 </resources>
