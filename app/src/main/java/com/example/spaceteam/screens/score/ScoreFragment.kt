@@ -10,8 +10,20 @@ import androidx.navigation.findNavController
 import com.example.spaceteam.R
 import com.example.spaceteam.databinding.ScoreFragmentBinding
 
+/**
+ * Score fragment
+ */
 class ScoreFragment : Fragment() {
 
+    /**
+     * called on the creation od fragment
+     *
+     * @param inflater:LayoutInflater
+     * @param container:ViewGroup?
+     * @param savedInstanceState:Bundle?
+     *
+     * @return View?
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

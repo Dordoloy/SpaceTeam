@@ -10,8 +10,20 @@ import androidx.navigation.findNavController
 import com.example.spaceteam.R
 import com.example.spaceteam.databinding.RoomFragmentBinding
 
+/**
+ * Fragment of a room
+ */
 class RoomFragment: Fragment() {
 
+    /**
+     * called on the creation of fragment
+     *
+     * @param inflater:LayoutInflater
+     * @param container: ViewGroup?
+     * @param savedInstanceState:Bundle?
+     *
+     * @return View?
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -128,7 +128,7 @@ class WebSocketConnection {
 
         // Instance of the web socket
         clientWebSocket.newWebSocket(
-            Request.Builder().url(Config.baseURL + "/join").build(),
+            Request.Builder().url(Config.baseURL + "/join/$roomName/$userId").build(),
             object : WebSocketListener() {
 
                 /**

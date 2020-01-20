@@ -10,9 +10,15 @@ import androidx.navigation.findNavController
 import com.example.spaceteam.R
 import com.example.spaceteam.databinding.TitleFragmentBinding
 
+/**
+ * Title fragment
+ */
 class TitleFragment: Fragment() {
-
-
+    /**
+     * called on the creation of fragment
+     *
+     * @param
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
