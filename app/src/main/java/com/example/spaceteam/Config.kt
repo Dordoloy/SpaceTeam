@@ -16,7 +16,8 @@ object Config {
     val domain = "vps769278.ovh.net"
     /**
      * Base of Web Socket URL
-     *
      */
-    val baseURL = "ws://$domain:8081/ws"
+    val socketURL = "ws://$domain:8081/ws"
+
+    val ApiURL = "http://$domain"
 }

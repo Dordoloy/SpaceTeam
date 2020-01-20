@@ -2,9 +2,7 @@ package com.example.spaceteam.serviceWeb
 
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.example.spaceteam.Config
-import com.example.spaceteam.model.Event
 import okhttp3.*
 import okio.ByteString
 
@@ -28,7 +26,7 @@ class TestConnection {
 
         // Instance of the web socket
         clientWebSocket.newWebSocket(
-            Request.Builder().url(Config.baseURL).build(),
+            Request.Builder().url(Config.socketURL).build(),
             object : WebSocketListener() {
                 /**
                  * Function for open the connection

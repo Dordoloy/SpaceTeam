@@ -77,7 +77,7 @@ object SpaceTeamService {
      * Object is an build instance of Retrofit service all configured
      */
     val retrofit = Retrofit.Builder()
-        .baseUrl("http://" + Config.domain)
+        .baseUrl(Config.ApiURL)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .client(okhttp3.OkHttpClient())
         .build()

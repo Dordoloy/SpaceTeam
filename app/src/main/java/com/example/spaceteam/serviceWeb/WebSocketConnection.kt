@@ -5,13 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import com.example.spaceteam.Config
 import com.example.spaceteam.model.Event
 import com.example.spaceteam.model.EventType
+import com.example.spaceteam.model.UIElement
+import com.example.spaceteam.model.UIType
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.*
-import okio.ByteString
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 /**
  * Class of Web Socket Connection
@@ -37,7 +36,7 @@ class WebSocketConnection {
 
         // Instance of the web socket
         clientWebSocket.newWebSocket(
-            Request.Builder().url(Config.baseURL + "/join/$roomName/$userId").build(),
+            Request.Builder().url(Config.socketURL + "/join/$roomName/$userId").build(),
             object : WebSocketListener() {
 
                 /**
@@ -50,7 +49,6 @@ class WebSocketConnection {
                     webSocket: WebSocket,
                     response: Response
                 ) {
-                    webSocket.send("")
                     Log.d(Config.TAG, "Connection to web socket is open")
                 }
 
@@ -61,9 +59,10 @@ class WebSocketConnection {
                  * @param text:String The message text sending by the server
                  */
                 override fun onMessage(webSocket: WebSocket, text: String) {
-                    Log.d(Config.TAG, "Receive message from socket : $text")
                     val event = MoshiPolymorphic.parser.fromJson(text)
                     lastEventReceived.postValue(event)
+                    //webSocket.send("{\"type\":\"READY\", \"value\":true}")
+                    Log.d(Config.TAG, "Receive message from socket : ${event.toString()}")
                 }
 
 
@@ -131,27 +130,23 @@ class WebSocketConnection {
 object MoshiPolymorphic {
     var polymorphicAdapter = Moshi.Builder()
         .add(
-            PolymorphicJsonAdapterFactory.of(Event::class.java, "action")
+            PolymorphicJsonAdapterFactory.of(Event::class.java, "type")
+                .withSubtype(Event.WaitingForPlayer::class.java, EventType.WAITING_FOR_PLAYER.name)
                 .withSubtype(Event.NextAction::class.java, EventType.NEXT_ACTION.name)
                 .withSubtype(Event.GameStarted::class.java, EventType.GAME_STARTED.name)
                 .withSubtype(Event.GameOver::class.java, EventType.GAME_OVER.name)
                 .withSubtype(Event.NextLevel::class.java, EventType.NEXT_LEVEL.name)
-                .withSubtype(Event.WaitingForPlayer::class.java, EventType.WAITING_FOR_PLAYER.name)
                 .withSubtype(Event.Error::class.java, EventType.ERROR.name)
                 .withSubtype(Event.Ready::class.java, EventType.READY.name)
-                .withSubtype(Event.PlayerAction::class.java, EventType.PLAYER_ACTION.name))
+                .withSubtype(Event.PlayerAction::class.java, EventType.PLAYER_ACTION.name)
+        )
+        .add(
+            PolymorphicJsonAdapterFactory.of(UIElement::class.java, "uiElement")
+                .withSubtype(UIElement.Switch::class.java, UIType.SWITCH.name)
+                .withSubtype(UIElement.Shake::class.java, UIType.SHAKE.name)
+                .withSubtype(UIElement.Button::class.java, UIType.BUTTON.name)
+        )
         .add(KotlinJsonAdapterFactory())
         .build()
-
     var parser = polymorphicAdapter.adapter<Event>(Event::class.java)
-
-
-
-    var retrofit = Retrofit.Builder()
-        .baseUrl(Config.baseURL)
-        .addConverterFactory(MoshiConverterFactory.create(polymorphicAdapter))
-        .client(okhttp3.OkHttpClient())
-        .build()
-
-    var webSocketService = retrofit.create<WebSocketConnection>(WebSocketConnection::class.java)
 }
