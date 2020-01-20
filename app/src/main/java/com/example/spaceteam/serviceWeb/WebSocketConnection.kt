@@ -1,12 +1,16 @@
 package com.example.spaceteam.serviceWeb
 
 import android.util.Log
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import com.example.spaceteam.Config
 import com.example.spaceteam.model.Event
+import com.example.spaceteam.model.EventType
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.*
 import okio.ByteString
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 /**
  * Class of Web Socket Connection
@@ -228,5 +232,29 @@ class WebSocketConnection {
             })
         clientWebSocket.dispatcher.executorService.shutdown()
     }
+
 }
 
+class MoshiPolymorphic {
+    var polymorphicAdapter = Moshi.Builder()
+        .add(
+            PolymorphicJsonAdapterFactory.of(Event::class.java, "action")
+                .withSubtype(Event.NextAction::class.java, EventType.NEXT_ACTION.name)
+                .withSubtype(Event.GameStarted::class.java, EventType.GAME_STARTED.name)
+                .withSubtype(Event.GameOver::class.java, EventType.GAME_OVER.name)
+                .withSubtype(Event.NextLevel::class.java, EventType.NEXT_LEVEL.name)
+                .withSubtype(Event.WaitingForPlayer::class.java, EventType.WAITING_FOR_PLAYER.name)
+                .withSubtype(Event.Error::class.java, EventType.ERROR.name)
+                .withSubtype(Event.Ready::class.java, EventType.READY.name)
+                .withSubtype(Event.PlayerAction::class.java, EventType.PLAYER_ACTION.name))
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
+    var retrofit = Retrofit.Builder()
+        .baseUrl(Config.baseURL)
+        .addConverterFactory(MoshiConverterFactory.create(polymorphicAdapter))
+        .client(okhttp3.OkHttpClient())
+        .build()
+
+    var webSocketService = retrofit.create<WebSocketConnection>(WebSocketConnection::class.java)
+}
