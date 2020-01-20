@@ -68,12 +68,18 @@ sealed class Event(val type: EventType) {
     /**
      * The game is ready to start
      *
+     * @param value:Boolean define if it' ready
+     *
+     * @return Event of READY
      */
     data class Ready(val value: Boolean) : Event(EventType.READY)
 
     /**
      * The user have donne something
      *
+     * @param uiElement: UIElement the element actined by user
+     *
+     * @return Event of PLAYER_ACTION
      */
     data class PlayerAction(val uiElement: UIElement) : Event(EventType.PLAYER_ACTION)
 }
@@ -85,47 +91,39 @@ enum class EventType {
     /**
      * Game is started
      */
-    GAME_STARTED()
+    GAME_STARTED(),
 
     /**
      * Game is over
      */
-    ,
-    GAME_OVER()
+    GAME_OVER(),
 
     /**
      * An error is appear
      */
-    ,
-    ERROR()
+    ERROR(),
 
     /**
      * The game is ready to be played
      */
-    ,
-    READY()
+    READY(),
 
     /**
      * Next action to be donne
      */
-    ,
-    NEXT_ACTION()
+    NEXT_ACTION(),
 
     /**
      * Next level
      */
-    ,
-    NEXT_LEVEL()
+    NEXT_LEVEL(),
 
     /**
      * The room is waiting players
      */
-    ,
-    WAITING_FOR_PLAYER()
-
+    WAITING_FOR_PLAYER(),
     /**
      * Action to be donne by the player
      */
-    ,
     PLAYER_ACTION()
 }

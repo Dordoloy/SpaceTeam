@@ -10,8 +10,14 @@ import androidx.navigation.findNavController
 import com.example.spaceteam.R
 import com.example.spaceteam.databinding.GameFragmentBinding
 
+/**
+ * Fragment of game
+ */
 class GameFragment: Fragment() {
 
+    /**
+     * called on the creation of fragment
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

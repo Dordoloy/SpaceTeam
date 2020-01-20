@@ -1,4 +1,6 @@
 package com.example.spaceteam.screens.game
 
-class GameViewModel {
-}
+/**
+ * View of game
+ */
+class GameViewModel
