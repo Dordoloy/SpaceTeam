@@ -16,7 +16,7 @@ import okhttp3.*
  * Class of Web Socket Connection
  *
  */
-class WebSocketConnection {
+object WebSocketConnection {
 
     /**
      * Client OkHttp
@@ -26,16 +26,21 @@ class WebSocketConnection {
 
     val lastEventReceived = MutableLiveData<Event>()
 
+    fun sayPlayerReady(webSocket: WebSocket) {
+        webSocket.send(parser.toJson(Event.Ready(true)))
+    }
+
     /**
      * Function called for add a player to a room
      *
      * @param roomName:String Name of the room the user would join
      * @param userId:Int Id of the user
      */
-    fun joinRoom(roomName: String, userId: Int) {
+    fun joinRoom(roomName: String, userId: Int): WebSocket {
+
 
         // Instance of the web socket
-        clientWebSocket.newWebSocket(
+        var webSocket = clientWebSocket.newWebSocket(
             Request.Builder().url(Config.socketURL + "/join/$roomName/$userId").build(),
             object : WebSocketListener() {
 
@@ -59,9 +64,9 @@ class WebSocketConnection {
                  * @param text:String The message text sending by the server
                  */
                 override fun onMessage(webSocket: WebSocket, text: String) {
-                    val event = MoshiPolymorphic.parser.fromJson(text)
+                    val event = parser.fromJson(text)
                     lastEventReceived.postValue(event)
-                    //webSocket.send("{\"type\":\"READY\", \"value\":true}")
+
                     Log.d(Config.TAG, "Receive message from socket : ${event.toString()}")
                 }
 
@@ -122,13 +127,11 @@ class WebSocketConnection {
                     )
                 }
             })
-        clientWebSocket.dispatcher.executorService.shutdown()
+        return webSocket
     }
 
-}
 
-object MoshiPolymorphic {
-    var polymorphicAdapter = Moshi.Builder()
+    var parser = Moshi.Builder()
         .add(
             PolymorphicJsonAdapterFactory.of(Event::class.java, "type")
                 .withSubtype(Event.WaitingForPlayer::class.java, EventType.WAITING_FOR_PLAYER.name)
@@ -141,12 +144,12 @@ object MoshiPolymorphic {
                 .withSubtype(Event.PlayerAction::class.java, EventType.PLAYER_ACTION.name)
         )
         .add(
-            PolymorphicJsonAdapterFactory.of(UIElement::class.java, "uiElement")
+            PolymorphicJsonAdapterFactory.of(UIElement::class.java, "type")
                 .withSubtype(UIElement.Switch::class.java, UIType.SWITCH.name)
                 .withSubtype(UIElement.Shake::class.java, UIType.SHAKE.name)
                 .withSubtype(UIElement.Button::class.java, UIType.BUTTON.name)
         )
         .add(KotlinJsonAdapterFactory())
-        .build()
-    var parser = polymorphicAdapter.adapter<Event>(Event::class.java)
+        .build().adapter<Event>(Event::class.java)
+
 }
