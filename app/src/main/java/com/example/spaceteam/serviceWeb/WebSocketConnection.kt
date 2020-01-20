@@ -111,7 +111,7 @@ class WebSocketConnection {
                     t: Throwable,
                     response: Response?
                 ) {
-                    Log.d(Config.TAG, "Web socket connection fail : ${response.toString()}")
+                    Log.d(Config.TAG, "Web socket connection fail : ${response.toString()} ${t.message}")
                 }
             })
 
