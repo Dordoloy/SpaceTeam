@@ -1,4 +1,7 @@
 package com.example.spaceteam.screens.user
 
-class UserFragment {
-}
+/**
+ * User fragment for game logic
+ *
+ */
+class UserFragment

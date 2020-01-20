@@ -4,8 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
+/**
+ * Main class point of enter of programme
+ */
 class MainActivity : AppCompatActivity() {
 
+    /**
+     * called in the creation of the application
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("DEBUG-27", "main")
         super.onCreate(savedInstanceState)

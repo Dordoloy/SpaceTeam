@@ -32,7 +32,7 @@ android {
     }
     dokka {
         outputFormat = 'html'
-        outputDirectory = "$buildDir/javadoc"
+        outputDirectory = "./javadoc"
     }
 }
 

@@ -5,6 +5,7 @@ import com.example.spaceteam.model.Room
 import com.example.spaceteam.model.User
 import com.example.spaceteam.model.UserPost
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
@@ -31,6 +32,7 @@ interface ISpaceTeamService {
      * Get detail of one user by is ID
      *
      * @param id:Int the user id
+     *
      * @return User? the user of id
      */
     @GET("/api/user/{id}")
@@ -39,7 +41,9 @@ interface ISpaceTeamService {
     /**
      * Log a new user on the server by a login
      *
-     * @param newUser:UserPost the name of the new user
+     * @param userPostJon:String the name of the new user
+     *
+     * @return the id of new user
      */
     @POST("/api/user/register")
     fun registerUser(@Body userPostJon: String): Int?
@@ -55,7 +59,7 @@ interface ISpaceTeamService {
 }
 
 /**
- * Get an instance of server for use differents functions
+ * Get an instance of server for use different functions
  *
  */
 object SpaceTeamService {
@@ -69,9 +73,16 @@ object SpaceTeamService {
         .build()
         .create(ISpaceTeamService::class.java)
 
+    /**
+     * Log a new user on the server by a login and convert the UserPost object to json
+     *
+     * @param newUser:UserPost the name of the new user
+     *
+     * @return the id of new user
+     */
     fun registerUser(userPost: UserPost): Int? {
         return serverAccess.registerUser(
-            Moshi.Builder().build().adapter(UserPost::class.java).toJson(
+            Moshi.Builder().add(KotlinJsonAdapterFactory()).build().adapter(UserPost::class.java).toJson(
                 userPost
             )
         )

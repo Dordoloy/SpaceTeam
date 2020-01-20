@@ -1,4 +1,7 @@
 package com.example.spaceteam.screens.user
 
-class UserViewModel {
-}
+/**
+ * Manage the layout of user fragment
+ *
+ */
+class UserViewModel
