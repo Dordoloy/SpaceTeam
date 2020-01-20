@@ -3,6 +3,13 @@ package com.example.spaceteam
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
+
+
+
+
+
+
 
 /**
  * Main class point of enter of programme
@@ -19,4 +26,9 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    override fun onBackPressed() {
+        // super.onBackPressed(); commented this line in order to disable back press
+    }
+
 }

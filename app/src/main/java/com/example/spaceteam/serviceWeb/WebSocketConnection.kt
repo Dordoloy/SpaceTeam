@@ -250,6 +250,15 @@ class MoshiPolymorphic {
         .add(KotlinJsonAdapterFactory())
         .build()
 
+    var parser = polymorphicAdapter.adapter<Event>(Event::class.java)
+
+    fun truc() {
+
+        parser.fromJson()
+
+    }
+
+
     var retrofit = Retrofit.Builder()
         .baseUrl(Config.baseURL)
         .addConverterFactory(MoshiConverterFactory.create(polymorphicAdapter))
