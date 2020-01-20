@@ -6,9 +6,14 @@ import com.example.spaceteam.serviceWeb.WebSocketConnection
 
 /**
  * View of game
+ *
+ * @param webSocketListener: WebSocketConnection Connection to the webSocket
  */
 class GameViewModel(val webSocketListener: WebSocketConnection) {
 
+    /**
+     * Observe the modification on live data
+     */
     fun getLastEventReceived() : LiveData<Event> = webSocketListener.lastEventReceived
 
 

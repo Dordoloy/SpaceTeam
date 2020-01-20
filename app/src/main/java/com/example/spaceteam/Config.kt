@@ -19,5 +19,8 @@ object Config {
      */
     val socketURL = "ws://$domain:8081/ws"
 
+    /**
+     * API URL in http, for abort mistakes with socketURL
+     */
     val ApiURL = "http://$domain"
 }

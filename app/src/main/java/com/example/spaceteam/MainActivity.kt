@@ -26,6 +26,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Called when the user pres the return button
+     */
     override fun onBackPressed() {
         // super.onBackPressed(); commented this line in order to disable back press
     }

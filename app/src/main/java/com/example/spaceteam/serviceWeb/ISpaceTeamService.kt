@@ -1,9 +1,8 @@
 package com.example.spaceteam.serviceWeb
 
 import com.example.spaceteam.Config
-import com.example.spaceteam.model.RoomList
+import com.example.spaceteam.model.Room
 import com.example.spaceteam.model.User
-import com.example.spaceteam.model.UserList
 import com.example.spaceteam.model.UserPost
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -28,7 +27,7 @@ interface ISpaceTeamService {
      * @return List<User>? the list of user connected
      */
     @GET("/api/users")
-    fun userList(): Call<UserList>
+    fun userList(): Call<List<User>>
 
     /**
      * Get detail of one user by is ID
@@ -56,7 +55,7 @@ interface ISpaceTeamService {
      * @return List<Room>? the list of all room existed in the server
      */
     @GET("/show")
-    fun roomList(): Call<RoomList>
+    fun roomList(): Call<List<Room>>
 
 }
 
@@ -69,6 +68,9 @@ interface ISpaceTeamService {
  */
 object SpaceTeamService {
 
+    /**
+     * Instance of Moshi
+     */
     val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()

@@ -20,14 +20,30 @@ object WebSocketConnection {
 
     /**
      * Client OkHttp
-     *
      */
     val clientWebSocket = OkHttpClient()
 
+    /**
+     * Live data of Event
+     */
     val lastEventReceived = MutableLiveData<Event>()
 
+    /**
+     * Tell to the server the player is ready
+     *
+     * @param webSocket: WebSocket, instance of web socket
+     */
     fun sayPlayerReady(webSocket: WebSocket) {
         webSocket.send(parser.toJson(Event.Ready(true)))
+    }
+
+    /**
+     * Tell to the server what player do on UI
+     *
+     * @param uiElement: UIElement, the UI element the player actioned
+     */
+    fun makeAction(webSocket: WebSocket, uiElement: UIElement) {
+        webSocket.send(parser.toJson(Event.PlayerAction(uiElement)))
     }
 
     /**
@@ -35,11 +51,15 @@ object WebSocketConnection {
      *
      * @param roomName:String Name of the room the user would join
      * @param userId:Int Id of the user
+     *
+     * @return an instance of webSocket
      */
     fun joinRoom(roomName: String, userId: Int): WebSocket {
 
 
-        // Instance of the web socket
+        /**
+         * instance od web socket
+         */
         var webSocket = clientWebSocket.newWebSocket(
             Request.Builder().url(Config.socketURL + "/join/$roomName/$userId").build(),
             object : WebSocketListener() {
@@ -130,7 +150,9 @@ object WebSocketConnection {
         return webSocket
     }
 
-
+    /**
+     * Moshi's parser for convert JSON ans Kotlin classes
+     */
     var parser = Moshi.Builder()
         .add(
             PolymorphicJsonAdapterFactory.of(Event::class.java, "type")
@@ -151,5 +173,4 @@ object WebSocketConnection {
         )
         .add(KotlinJsonAdapterFactory())
         .build().adapter<Event>(Event::class.java)
-
 }
