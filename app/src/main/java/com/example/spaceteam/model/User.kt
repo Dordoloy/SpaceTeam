@@ -26,6 +26,10 @@ data class User(
     var state: State = State.OVER
 )
 
+data class UserList(
+    val userList: List<User>
+)
+
 /**
  * data class for register a user
  *

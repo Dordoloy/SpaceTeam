@@ -14,3 +14,5 @@ data class Room(
     var initialNumberOfUser: Int,
     var userList: List<User>
 )
+
+data class RoomList(var room: List<Room>)

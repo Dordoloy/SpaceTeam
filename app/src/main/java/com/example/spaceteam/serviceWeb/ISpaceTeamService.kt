@@ -1,12 +1,13 @@
 package com.example.spaceteam.serviceWeb
 
 import com.example.spaceteam.Config
-import com.example.spaceteam.model.Room
+import com.example.spaceteam.model.RoomList
 import com.example.spaceteam.model.User
+import com.example.spaceteam.model.UserList
 import com.example.spaceteam.model.UserPost
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import kotlinx.coroutines.Deferred
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
@@ -27,7 +28,7 @@ interface ISpaceTeamService {
      * @return List<User>? the list of user connected
      */
     @GET("/api/users")
-    fun userList(): Deferred<List<User>>
+    fun userList(): Call<UserList>
 
     /**
      * Get detail of one user by is ID
@@ -37,7 +38,7 @@ interface ISpaceTeamService {
      * @return User? the user of id
      */
     @GET("/api/user/{id}")
-    fun logUserById(@Path("id") id: Int): Deferred<User>
+    fun logUserById(@Path("id") id: Int): Call<User>
 
     /**
      * Log a new user on the server by a login
@@ -47,7 +48,7 @@ interface ISpaceTeamService {
      * @return the id of new user
      */
     @POST("/api/user/register")
-    fun registerUser(@Body userPostJon: String): Deferred<User>
+    fun registerUser(@Body userPostJon: String): Call<User>
 
     /**
      * Get the list of amiable room
@@ -55,28 +56,33 @@ interface ISpaceTeamService {
      * @return List<Room>? the list of all room existed in the server
      */
     @GET("/show")
-    fun roomList(): Deferred<List<Room>>
+    fun roomList(): Call<RoomList>
 
 }
 
+
+
+
+
 /**
  * Get an instance of server for use different functions
- *
  */
 object SpaceTeamService {
 
-    val SpaceTeamAPI: ISpaceTeamService by lazy { serverAccess }
+    val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
 
     /**
      * Object is an build instance of Retrofit service all configured
-     *
      */
-    var serverAccess = Retrofit.Builder()
+    val retrofit = Retrofit.Builder()
         .baseUrl("http://" + Config.domain)
-        .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
         .client(okhttp3.OkHttpClient())
         .build()
         .create(ISpaceTeamService::class.java)
+
 
     /**
      * Log a new user on the server by a login and convert the UserPost object to json
@@ -86,12 +92,14 @@ object SpaceTeamService {
      * @return the id of new user
      */
     fun registerUser(userPost: UserPost) {
-        serverAccess.registerUser(
+        retrofit.registerUser(
             Moshi.Builder().add(KotlinJsonAdapterFactory()).build().adapter(UserPost::class.java).toJson(
                 userPost
             )
         )
     }
+
+
 }
 
 
