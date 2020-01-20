@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.spaceteam.R
 import com.example.spaceteam.databinding.RoomFragmentBinding
+import com.example.spaceteam.serviceWeb.ISpaceTeamService
+import com.example.spaceteam.serviceWeb.SpaceTeamService
 
 /**
  * Fragment of a room
