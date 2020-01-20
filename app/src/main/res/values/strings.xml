@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">SpaceTeam</string>
+    <string name="space_auk_team_label">Space Auk Team</string>
+    <string name="enter_your_room_name_below_label">Enter your room name below</string>
+    <string name="go_label">Go!</string>
     <string name="team_score">Your team score</string>
     <string name="play_again">Play Again</string>
     <string name="quit">Quit</string>
     <string name="play">Play</string>
     <string name="finish">Finish</string>
+    <string name="enter_pseudo_label">Enter pseudo</string>
+    <string name="formation_de_l_equipe_de_pingouins_label">Formation de l\'équipe de pingouins</string>
+    <string name="ready_label">Ready!</string>
 </resources>
