@@ -9,4 +9,6 @@
     <string name="play">Play</string>
     <string name="finish">Finish</string>
     <string name="enter_pseudo_label">Enter pseudo</string>
+    <string name="formation_de_l_equipe_de_pingouins_label">Formation de l\'équipe de pingouins</string>
+    <string name="ready_label">Ready!</string>
 </resources>
