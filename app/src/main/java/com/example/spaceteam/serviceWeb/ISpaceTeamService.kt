@@ -54,8 +54,21 @@ interface ISpaceTeamService {
 
 }
 
-var serviceSpaceTeam: ISpaceTeamService = Retrofit.Builder()
-    .baseUrl("http://" + Config.domain)
-    .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build())) // com.squareup.retrofit2:converter-moshi:latest.version
-    .build()
-    .create(ISpaceTeamService::class.java)
+/**
+ * Get an instance of server for use differents functions
+ *
+ */
+object SpaceTeamService {
+    /**
+     * Object is an build instance of Retrofit service all configured
+     *
+     */
+    var serverAccess: ISpaceTeamService = Retrofit.Builder()
+        .baseUrl("http://" + Config.domain)
+        .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
+        .build()
+        .create(ISpaceTeamService::class.java)
+}
+
+
+

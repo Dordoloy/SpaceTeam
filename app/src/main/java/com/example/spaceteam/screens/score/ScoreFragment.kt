@@ -27,7 +27,6 @@ class ScoreFragment : Fragment() {
         binding.playAgainButton.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_scoreFragment_to_roomFragment)
         }
-
         return binding.root
     }
 }
