@@ -1,5 +1,6 @@
 package com.example.spaceteam.screens.score
 
-
-class ScoreViewModel {
-}
+/**
+ * score view
+ */
+class ScoreViewModel

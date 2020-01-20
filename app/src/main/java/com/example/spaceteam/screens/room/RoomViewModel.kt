@@ -1,4 +1,6 @@
 package com.example.spaceteam.screens.room
 
-class RoomViewModel {
-}
+/**
+ * view of room
+ */
+class RoomViewModel

@@ -17,7 +17,11 @@ class TitleFragment: Fragment() {
     /**
      * called on the creation of fragment
      *
-     * @param
+     * @param inflater:LayoutInflater
+     * @param container: ViewGroup?
+     * @param savedInstanceState:Bundle?
+     *
+     * @return View?
      */
     override fun onCreateView(
         inflater: LayoutInflater,

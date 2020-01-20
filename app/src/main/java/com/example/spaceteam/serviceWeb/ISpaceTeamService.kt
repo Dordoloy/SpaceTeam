@@ -46,7 +46,7 @@ interface ISpaceTeamService {
      * @return the id of new user
      */
     @POST("/api/user/register")
-    fun registerUser(@Body userPostJon: String): Int?
+    fun registerUser(@Body userPostJon: String): User?
 
     /**
      * Get the list of amiable room
@@ -80,7 +80,7 @@ object SpaceTeamService {
      *
      * @return the id of new user
      */
-    fun registerUser(userPost: UserPost): Int? {
+    fun registerUser(userPost: UserPost): User? {
         return serverAccess.registerUser(
             Moshi.Builder().add(KotlinJsonAdapterFactory()).build().adapter(UserPost::class.java).toJson(
                 userPost

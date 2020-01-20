@@ -17,6 +17,12 @@ class GameFragment: Fragment() {
 
     /**
      * called on the creation of fragment
+     *
+     * @param inflater:LayoutInflater
+     * @param container: ViewGroup?
+     * @param savedInstanceState:Bundle?
+     *
+     * @return View?
      */
     override fun onCreateView(
         inflater: LayoutInflater,

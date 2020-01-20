@@ -18,5 +18,5 @@ object Config {
      * Base of Web Socket URL
      *
      */
-    val baseURL = "ws://$domain:8081/ws"
+    val baseURL = "ws://$domain:8081/m"
 }
