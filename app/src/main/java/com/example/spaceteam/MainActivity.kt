@@ -16,5 +16,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("DEBUG-27", "main")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
     }
 }

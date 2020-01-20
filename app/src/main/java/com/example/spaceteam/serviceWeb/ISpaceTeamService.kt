@@ -91,8 +91,8 @@ object SpaceTeamService {
      *
      * @return the id of new user
      */
-    fun registerUser(userPost: UserPost) {
-        retrofit.registerUser(
+    fun registerUser(userPost: UserPost): Call<User> {
+        return retrofit.registerUser(
             Moshi.Builder().add(KotlinJsonAdapterFactory()).build().adapter(UserPost::class.java).toJson(
                 userPost
             )
