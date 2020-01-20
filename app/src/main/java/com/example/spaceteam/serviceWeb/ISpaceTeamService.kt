@@ -1,10 +1,12 @@
 package com.example.spaceteam.serviceWeb
 
 import com.example.spaceteam.Config
-import com.example.spaceteam.model.*
+import com.example.spaceteam.model.Room
+import com.example.spaceteam.model.User
+import com.example.spaceteam.model.UserPost
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
@@ -25,7 +27,7 @@ interface ISpaceTeamService {
      * @return List<User>? the list of user connected
      */
     @GET("/api/users")
-    fun userList(): List<User>?
+    fun userList(): Deferred<List<User>>
 
     /**
      * Get detail of one user by is ID
@@ -35,7 +37,7 @@ interface ISpaceTeamService {
      * @return User? the user of id
      */
     @GET("/api/user/{id}")
-    fun logUserById(@Path("id") id: Int): User?
+    fun logUserById(@Path("id") id: Int): Deferred<User>
 
     /**
      * Log a new user on the server by a login
@@ -45,7 +47,7 @@ interface ISpaceTeamService {
      * @return the id of new user
      */
     @POST("/api/user/register")
-    fun registerUser(@Body userPostJon: String): User?
+    fun registerUser(@Body userPostJon: String): Deferred<User>
 
     /**
      * Get the list of amiable room
@@ -53,7 +55,7 @@ interface ISpaceTeamService {
      * @return List<Room>? the list of all room existed in the server
      */
     @GET("/show")
-    fun roomList(): List<Room>?
+    fun roomList(): Deferred<List<Room>>
 
 }
 
@@ -62,27 +64,16 @@ interface ISpaceTeamService {
  *
  */
 object SpaceTeamService {
+
+    val SpaceTeamAPI: ISpaceTeamService by lazy { serverAccess }
+
     /**
      * Object is an build instance of Retrofit service all configured
      *
      */
-    var polymorphicAdapter = Moshi.Builder()
-        .add(
-            PolymorphicJsonAdapterFactory.of(Event::class.java, "action")
-                .withSubtype(Event.NextAction::class.java, EventType.NEXT_ACTION.name)
-                .withSubtype(Event.GameStarted::class.java, EventType.GAME_STARTED.name)
-                .withSubtype(Event.GameOver::class.java, EventType.GAME_OVER.name)
-                .withSubtype(Event.NextLevel::class.java, EventType.NEXT_LEVEL.name)
-                .withSubtype(Event.WaitingForPlayer::class.java, EventType.WAITING_FOR_PLAYER.name)
-                .withSubtype(Event.Error::class.java, EventType.ERROR.name)
-                .withSubtype(Event.Ready::class.java, EventType.READY.name)
-                .withSubtype(Event.PlayerAction::class.java, EventType.PLAYER_ACTION.name))
-        .add(KotlinJsonAdapterFactory())
-        .build()
-
     var serverAccess = Retrofit.Builder()
-        .baseUrl(Config.baseURL)
-        .addConverterFactory(MoshiConverterFactory.create(polymorphicAdapter))
+        .baseUrl("http://" + Config.domain)
+        .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
         .client(okhttp3.OkHttpClient())
         .build()
         .create(ISpaceTeamService::class.java)
@@ -94,14 +85,13 @@ object SpaceTeamService {
      *
      * @return the id of new user
      */
-    fun registerUser(userPost: UserPost): User? {
-        return serverAccess.registerUser(
+    fun registerUser(userPost: UserPost) {
+        serverAccess.registerUser(
             Moshi.Builder().add(KotlinJsonAdapterFactory()).build().adapter(UserPost::class.java).toJson(
                 userPost
             )
         )
     }
-
 }
 
 
