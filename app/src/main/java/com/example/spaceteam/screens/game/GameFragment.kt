@@ -40,17 +40,10 @@ class GameFragment: Fragment() {
             R.layout.game_fragment, container, false
         )
 
-        WebSocketConnection().testConnection()
-        WebSocketConnection().joinRoom("myRoom",1)
-
         binding.finishButton.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.action_gameFragment_to_scoreFragment)
         }
 
-//        viewModel.event.observe(this, Observer { vent ->
-//            Log.d(Config.TAG, event.toString())
-//            observeEvent(event)
-//        })
 
         return binding.root
     }
