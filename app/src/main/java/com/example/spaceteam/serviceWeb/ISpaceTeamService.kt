@@ -42,7 +42,7 @@ interface ISpaceTeamService {
      * @param newUser:UserPost the name of the new user
      */
     @POST("/api/user/register")
-    fun registerUser(@Body newUser: UserPost)
+    fun registerUser(@Body userPostJon: String): Int?
 
     /**
      * Get the list of amiable room
@@ -68,6 +68,14 @@ object SpaceTeamService {
         .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
         .build()
         .create(ISpaceTeamService::class.java)
+
+    fun registerUser(userPost: UserPost): Int? {
+        return serverAccess.registerUser(
+            Moshi.Builder().build().adapter(UserPost::class.java).toJson(
+                userPost
+            )
+        )
+    }
 }
 
 

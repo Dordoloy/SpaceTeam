@@ -1,8 +1,8 @@
 package com.example.spaceteam
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,5 +10,6 @@ class MainActivity : AppCompatActivity() {
         Log.d("DEBUG-27", "main")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
     }
 }
