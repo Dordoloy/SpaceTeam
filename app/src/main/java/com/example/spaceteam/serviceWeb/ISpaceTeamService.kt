@@ -1,10 +1,9 @@
 package com.example.spaceteam.serviceWeb
 
 import com.example.spaceteam.Config
-import com.example.spaceteam.model.Room
-import com.example.spaceteam.model.User
-import com.example.spaceteam.model.UserPost
+import com.example.spaceteam.model.*
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -67,9 +66,24 @@ object SpaceTeamService {
      * Object is an build instance of Retrofit service all configured
      *
      */
-    var serverAccess: ISpaceTeamService = Retrofit.Builder()
-        .baseUrl("http://" + Config.domain)
-        .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
+    var polymorphicAdapter = Moshi.Builder()
+        .add(
+            PolymorphicJsonAdapterFactory.of(Event::class.java, "action")
+                .withSubtype(Event.NextAction::class.java, EventType.NEXT_ACTION.name)
+                .withSubtype(Event.GameStarted::class.java, EventType.GAME_STARTED.name)
+                .withSubtype(Event.GameOver::class.java, EventType.GAME_OVER.name)
+                .withSubtype(Event.NextLevel::class.java, EventType.NEXT_LEVEL.name)
+                .withSubtype(Event.WaitingForPlayer::class.java, EventType.WAITING_FOR_PLAYER.name)
+                .withSubtype(Event.Error::class.java, EventType.ERROR.name)
+                .withSubtype(Event.Ready::class.java, EventType.READY.name)
+                .withSubtype(Event.PlayerAction::class.java, EventType.PLAYER_ACTION.name))
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
+    var serverAccess = Retrofit.Builder()
+        .baseUrl(Config.baseURL)
+        .addConverterFactory(MoshiConverterFactory.create(polymorphicAdapter))
+        .client(okhttp3.OkHttpClient())
         .build()
         .create(ISpaceTeamService::class.java)
 
@@ -87,6 +101,7 @@ object SpaceTeamService {
             )
         )
     }
+
 }
 
 

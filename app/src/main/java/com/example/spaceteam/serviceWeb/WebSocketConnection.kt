@@ -1,7 +1,10 @@
 package com.example.spaceteam.serviceWeb
 
 import android.util.Log
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.example.spaceteam.Config
+import com.example.spaceteam.model.Event
 import okhttp3.*
 import okio.ByteString
 
@@ -21,6 +24,8 @@ class WebSocketConnection {
      * Function that test the connection to the server
      *
      */
+
+
     fun testConnection() {
 
         // Instance of the web socket
@@ -224,3 +229,4 @@ class WebSocketConnection {
         clientWebSocket.dispatcher.executorService.shutdown()
     }
 }
+

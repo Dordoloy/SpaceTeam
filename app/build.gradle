@@ -77,6 +77,9 @@ dependencies {
     //okhttp test
     testImplementation("com.squareup.okhttp3:mockwebserver:4.3.1")
 
+    //polymorphic
+    implementation("com.squareup.moshi:moshi-adapters:1.9.2")
+
     testImplementation 'junit:junit:4.13'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

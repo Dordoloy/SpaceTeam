@@ -29,10 +29,12 @@ class GameFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<GameFragmentBinding>(inflater,
-            R.layout.game_fragment,container,false)
+        val binding = DataBindingUtil.inflate<GameFragmentBinding>(
+            inflater,
+            R.layout.game_fragment, container, false
+        )
 
-        binding.finishButton.setOnClickListener { view : View ->
+        binding.finishButton.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.action_gameFragment_to_scoreFragment)
         }
 
