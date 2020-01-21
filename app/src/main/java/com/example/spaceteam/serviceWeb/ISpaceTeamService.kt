@@ -47,7 +47,7 @@ interface ISpaceTeamService {
      * @return the id of new user
      */
     @POST("/api/user/register")
-    fun registerUser(@Body userPostJon: String): Call<User>
+    fun registerUser(@Body userPostJon: UserPost): Call<User>
 
     /**
      * Get the list of amiable room
@@ -84,23 +84,6 @@ object SpaceTeamService {
         .client(okhttp3.OkHttpClient())
         .build()
         .create(ISpaceTeamService::class.java)
-
-
-    /**
-     * Log a new user on the server by a login and convert the UserPost object to json
-     *
-     * @param newUser:UserPost the name of the new user
-     *
-     * @return the id of new user
-     */
-    fun registerUser(userPost: UserPost): Call<User> {
-        return retrofit.registerUser(
-            Moshi.Builder().add(KotlinJsonAdapterFactory()).build().adapter(UserPost::class.java).toJson(
-                userPost
-            )
-        )
-    }
-
 
 }
 

@@ -3,7 +3,6 @@ package com.example.spaceteam
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.Toast
 import com.example.spaceteam.serviceWeb.WebSocketConnection
 
 
@@ -20,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var webSocket = WebSocketConnection.joinRoom("NewTestRoom", 4)
+        var webSocket = WebSocketConnection.joinRoom("NewTestRoom", 3)
 
         WebSocketConnection.sayPlayerReady(webSocket)
 
