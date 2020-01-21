@@ -87,6 +87,8 @@ object WebSocketConnection {
                     val event = parser.fromJson(text)
                     lastEventReceived.postValue(event)
 
+                    //lastEventReceived.value = event
+
                     Log.d(Config.TAG, "Receive message from socket : ${event.toString()}")
                 }
 
