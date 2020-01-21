@@ -18,6 +18,8 @@ import okhttp3.*
  */
 object WebSocketConnection {
 
+    var webSocket: WebSocket? = null
+
     /**
      * Client OkHttp
      */
@@ -175,4 +177,5 @@ object WebSocketConnection {
         )
         .add(KotlinJsonAdapterFactory())
         .build().adapter<Event>(Event::class.java)
+
 }
