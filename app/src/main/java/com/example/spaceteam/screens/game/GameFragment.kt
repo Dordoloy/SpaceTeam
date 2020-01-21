@@ -40,6 +40,11 @@ class GameFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        var webSocket = WebSocketConnection.joinRoom("Chocolatine3", 4)
+
+        WebSocketConnection.sayPlayerReady(webSocket)
+
         val binding = DataBindingUtil.inflate<GameFragmentBinding>(
             inflater,
             R.layout.game_fragment, container, false

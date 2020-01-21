@@ -17,6 +17,7 @@
             android:text="@string/formation_de_l_equipe_de_pingouins_label"
             android:textAlignment="center"
             android:textSize="40sp"
+            android:textColor="@color/white_text_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
